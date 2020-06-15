@@ -1,0 +1,3 @@
+# This folder contain two test file.
+# alpha.csv is the PI16+Treg VS PI16+Th data, run this with the go_community.R.
+# topTable.csv is ancreatic and splenic Tregs in the presence of high IL2 expression, run this with topTable.R.
