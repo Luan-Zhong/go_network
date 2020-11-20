@@ -70,39 +70,6 @@ all_go <- msigdbr(species = "Homo sapiens", category = "C5") %>%
   )
 
 
-# Pie chart
-
-library(ggplot2)
-type <- c('Remained GO terms','Filtered GO terms')
-nums <- c(7632,2560)
-df <- data.frame(type = type, nums = nums)
-p <- ggplot(data = df, 
-            mapping = aes(x = 'Content', y = nums, fill = type)) +
-  geom_bar(stat = 'identity', position = 'stack')
-label_value <- paste('(', round(df$nums/sum(df$nums) * 100, 1), '%)', sep = '')
-label <- paste(df$type, label_value, sep = '')
-p + 
-  coord_polar(theta = 'y') + 
-  labs(x = '', y = '', title = '') + 
-  theme(axis.text = element_blank()) + 
-  theme(axis.ticks = element_blank()) + 
-  scale_fill_discrete(labels = label)
-
-# Go filtering stat
-go_stat <- all_go %>% 
-  subset(select = c(gs_id, shortest_path)) %>% 
-  unique()
-go_stat$shortest_path <- as.integer(go_stat$shortest_path)
-
-ggplot(data = go_stat, mapping = aes(x = shortest_path, fill = shortest_path))+
-  geom_bar(stat="count",width = 0.5)+
-  scale_x_continuous(breaks=c(seq(1:10))) +
-  geom_text(stat='count',aes(label=..count..), vjust = -1, color="black", size = 3.5)+
-  theme_minimal() +
-  xlab ("Shortest pathway level") +
-  ylab ("Count")
-
-barplot(GO_dist$Count, GO_dist$`Shortest path`, names.arg = seq(1,10, by = 1),xlab="Shortest pathway level",ylab="Frequency")
 ## Pathway enrichment testing ##
 ######################################################################################################################
 
